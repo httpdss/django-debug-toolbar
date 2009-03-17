@@ -13,7 +13,7 @@
 <dl>
 {% for template in templates %}
 	<dt><strong><a class="remoteCall" href="/__debug__/template_source/?template={{ template.template.name }}">{{ template.template.name|addslashes }}</a></strong></dt>
-	<dd><samp>{{ template.template.origin_name|addslashes }}</samp></dd>
+    <dd><samp>{{ template.template.origin_name|addslashes }}</samp> <a href="txmt://open/?url=file://{{ template.template.origin_name|addslashes }}"><img src="{{ BASE_URL }}/__debug__/m/edit.gif" /></a> </dd>
 	<dd>
 		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext">Toggle Context</a></div>
 		<div class="djTemplateHideContextDiv" style="display:none;"><pre>{{ template.context }}</pre></div>
