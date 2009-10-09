@@ -3,7 +3,7 @@ Django Debug Toolbar
 ====================
 
 The Django Debug Toolbar is a configurable set of panels that display various
-debug information about the current request/response and when clicked, display 
+debug information about the current request/response and when clicked, display
 more details about the panel's content.
 
 Currently, the following panels have been written and are working:
@@ -15,6 +15,7 @@ Currently, the following panels have been written and are working:
 - GET/POST/cookie/session variable display
 - Templates and context used, and their template paths
 - SQL queries including time to execute and links to EXPLAIN each query
+- List of signals, their args and receivers
 - Logging output via Python's built-in logging module
 
 If you have ideas for other panels please let us know.
@@ -31,8 +32,8 @@ Installation
    Tying into middleware allows each panel to be instantiated on request and
    rendering to happen on response.
 
-   The order of MIDDLEWARE_CLASSES is important: the Debug Toolbar middleware 
-   must come after any other middleware that encodes the response's content 
+   The order of MIDDLEWARE_CLASSES is important: the Debug Toolbar middleware
+   must come after any other middleware that encodes the response's content
    (such as GZipMiddleware).
 
    Note: The debug toolbar will only display itself if the mimetype of the
@@ -50,7 +51,7 @@ Installation
 
 #. Add `debug_toolbar` to your `INSTALLED_APPS` setting so Django can find the
    template files associated with the Debug Toolbar.
-   
+
    Alternatively, add the path to the debug toolbar templates
    (``'path/to/debug_toolbar/templates'`` to your ``TEMPLATE_DIRS`` setting.)
 
@@ -59,9 +60,9 @@ Configuration
 
 The debug toolbar has two settings that can be set in `settings.py`:
 
-#. Optional: Add a tuple called `DEBUG_TOOLBAR_PANELS` to your ``settings.py`` 
-   file that specifies the full Python path to the panel that you want included 
-   in the Toolbar.  This setting looks very much like the `MIDDLEWARE_CLASSES` 
+#. Optional: Add a tuple called `DEBUG_TOOLBAR_PANELS` to your ``settings.py``
+   file that specifies the full Python path to the panel that you want included
+   in the Toolbar.  This setting looks very much like the `MIDDLEWARE_CLASSES`
    setting.  For example::
 
 	DEBUG_TOOLBAR_PANELS = (
@@ -72,6 +73,7 @@ The debug toolbar has two settings that can be set in `settings.py`:
 	    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
 	    'debug_toolbar.panels.template.TemplateDebugPanel',
 	    'debug_toolbar.panels.sql.SQLDebugPanel',
+	    'debug_toolbar.panels.signals.SignalDebugPanel',
 	    'debug_toolbar.panels.logger.LoggingPanel',
 	)
 
@@ -96,16 +98,29 @@ The debug toolbar has two settings that can be set in `settings.py`:
      provide your own method for displaying the toolbar which contains your
      custom logic.  This method should return True or False.
 
+   * `EXTRA_SIGNALS`: An array of custom signals that might be in your project,
+     defined as the python path to the signal.
+
+   * `HIDE_DJANGO_SQL`: If set to True (the default) then code in Django itself
+     won't be shown in SQL stacktraces.
+
+   * `SHOW_TEMPLATE_CONTEXT`: If set to True (the default) then a template's
+     context will be included with it in the Template debug panel.  Turning this
+     off is useful when you have large template contexts, or you have template
+     contexts with lazy datastructures that you don't want to be evaluated.
+
    Example configuration::
 
 	def custom_show_toolbar(request):
 	    return True # Always show toolbar, for example purposes only.
-	
+
 	DEBUG_TOOLBAR_CONFIG = {
 	    'INTERCEPT_REDIRECTS': False,
 	    'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
+	    'EXTRA_SIGNALS': ['myproject.signals.MySignal'],
+	    'HIDE_DJANGO_SQL': False,
 	}
 
 TODOs and BUGS
 ==============
-See: http://code.google.com/p/django-debug-toolbar/issues/list
+See: http://github.com/robhudson/django-debug-toolbar/issues
