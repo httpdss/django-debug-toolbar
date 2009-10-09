@@ -3,7 +3,7 @@
 {% if template_dirs %}
 	<ol>
 	{% for template in template_dirs %}
-		<li>{{ template }}</li>
+		<li><a class="fileLink" href="txmt://open?url=file://{{ template }}">{{ template }}</a></li>
 	{% endfor %}
 	</ol>
 {% else %}
@@ -14,8 +14,12 @@
 {% if templates %}
 <dl>
 {% for template in templates %}
-	<dt><strong><a class="remoteCall toggleTemplate" href="/__debug__/template_source/?template={{ template.template.name }}">{{ template.template.name|addslashes }}</a></strong></dt>
-	<dd><samp>{{ template.template.origin_name|addslashes }}</samp></dd>
+	<dt>
+	    <strong>
+	        <a class="remoteCall toggleTemplate" href="/__debug__/template_source/?template={{ template.template.name }}">{{ template.template.name|addslashes }}</a>
+        </strong> 
+    </dt>
+	<dd><samp><a class="fileLink" href="txmt://open?url=file://{{ template.template.origin_name|addslashes }}">{{ template.template.origin_name|addslashes }}</a></samp></dd>
 	{% if template.context %}
 	<dd>
 		<div class="djTemplateShowContextDiv"><a class="djTemplateShowContext"><span class="toggleArrow">&#x25B6;</span> {% trans 'Toggle Context' %}</a></div>

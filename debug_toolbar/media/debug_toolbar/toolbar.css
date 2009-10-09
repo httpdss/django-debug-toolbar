@@ -377,3 +377,11 @@
 #djDebug .highlight .nv { color:#333 } /* Name.Variable */
 #djDebug .highlight .s2 { color:#333 } /* Literal.String.Double */
 #djDebug .highlight .cp { color:#333 } /* Comment.Preproc */
+
+#djDebug .fileLink {
+    text-decoration:none;
+}
+
+#djDebug .fileLink:hover{
+    text-decoration:underline;
+}

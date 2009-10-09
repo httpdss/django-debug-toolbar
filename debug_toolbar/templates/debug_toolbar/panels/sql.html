@@ -37,7 +37,7 @@
 								<tr>
 									<td>{{ line }}</td>
 									<td><pre>{{ method|escape }}<pre></td>
-									<td><pre>{{ file|escape }}</pre></td>
+									<td><pre><a class="fileLink" href="txmt://open?url=file://{{ file|escape }}">{{ file|escape }}</a></pre></td>
 								</tr>
 							{% endfor %}
 						</table>
